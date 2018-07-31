@@ -35,3 +35,7 @@ Route::put('Tasks','TaskController@store');
 
 //delete task
 Route::delete('tasks','TaskController@destroy');
+
+// list product 
+
+Route::resource('products','ProductController');

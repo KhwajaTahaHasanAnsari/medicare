@@ -42,9 +42,16 @@
                     <router-link tag="li" to="/">
                              <a>Tasks</a>
                             </router-link>
+
                             <router-link tag="li" to="/profile">
                                 <a>Profile</a>
                             </router-link>
+                            <router-link tag="li" to="/product">
+                                <a>product</a>
+                            </router-link>
+
+                            
+
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">

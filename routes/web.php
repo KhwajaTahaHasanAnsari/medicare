@@ -21,7 +21,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('/task','Taskcontroller');
-
+Route::resource('/product','Productcontroller');
 
 //list single task
 Route::get('task/{id}', 'TaskController@show');
@@ -33,3 +33,6 @@ Route::put('Tasks','TaskController@store');
 
 //delete task
 Route::delete('tasks','TaskController@destroy');
+
+//list single product
+Route::get('product/{id}', 'Productcontroller@show');

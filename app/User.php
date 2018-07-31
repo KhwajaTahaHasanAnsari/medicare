@@ -29,4 +29,7 @@ class User extends Authenticatable
     public function task(){
         return $this->hasMany(tasks::class);
     }
+    public function product(){
+        return $this->hasMany(products::class);
+    }
 }

@@ -4,15 +4,15 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <button @click="initAddTask()" class="btn btn-primary btn-xs pull-right" >
-                            + Add New Task
+                        <button @click="initAddProduct()" class="btn btn-primary btn-xs pull-right" >
+                            + Add New Product
                         </button>
-                        My Tasks
+                        new product
                     </div>
  
                     <div class="panel-body">
                       <!--  {{csrf_field()}}-->
-                        <table class="table table-bordered table-striped table-responsive"  v-if="tasks.length > 0">
+                        <table class="table table-bordered table-striped table-responsive"  v-if="product.length > 0">
                             <tbody>
                             <tr>
                                 <th>
@@ -28,13 +28,13 @@
                                     Action
                                 </th>
                             </tr>
-                            <tr  v-for="task in tasks" :key="task.id">
-                                <td>{{ task.id}}</td>
+                            <tr  v-for="product in products" :key="product.id">
+                                <td>{{ product.id}}</td>
                                 <td>
-                                    {{ task.name }}
+                                    {{ product.name }}
                                 </td>
                                 <td>
-                                    {{ task.description }}
+                                    {{ product.description }}
                                 </td>
                                 <td>
                                     <button @click="initUpdate(index)" class="btn btn-success btn-xs">Edit</button>
@@ -54,7 +54,7 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Add New Task</h4>
+                        <h4 class="modal-title">Add New Product</h4>
                     </div>
                     <div class="modal-body">
  
@@ -66,18 +66,18 @@
  
                         <div class="form-group">
                             <label for="name">Name:</label>
-                            <input type="text" name="name" id="name" placeholder="Task Name" class="form-control"
-                                   v-model="task.name">
+                            <input type="text" name="name" id="name" placeholder="Prodcut Name" class="form-control"
+                                   v-model="Product.name">
                         </div>
                         <div class="form-group">
                             <label for="description">Description:</label>
                             <textarea name="description" id="description" cols="30" rows="5" class="form-control"
-                                      placeholder="Task Description" v-model="task.description"></textarea>
+                                      placeholder="Product Description" v-model="Product.description"></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" @click="createTask" class="btn btn-primary">Submit</button>
+                        <button type="button" @click="createProduct" class="btn btn-primary">Submit</button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
@@ -91,71 +91,63 @@
                                 aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title">Update Task</h4>
                     </div>
-                    <div class="modal-body">
- 
-                        <div class="alert alert-danger" v-if="errors.length > 0">
-                            <ul>
-                                <li v-for="error in errors">{{ error }}</li>
-                            </ul>
-                        </div>
- 
-                        <div class="form-group">
-                            <label>Name:</label>
-                            <input type="text" placeholder="Task Name" class="form-control"
-                                   v-model="update_task.name">
-                        </div>
-                        <div class="form-group">
-                            <label for="description">Description:</label>
-                            <textarea cols="30" rows="5" class="form-control"
-                                      placeholder="Task Description" v-model="update_task.description"></textarea>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" @click="updateTask" class="btn btn-primary">Submit</button>
-                    </div>
+                
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
  
     </div>
 </template>
+
+
+<!--<template>
+   <div>
+    <li v-for="product in products" :key ="product.id">
+       {{Products}}
+    </li>
+   </div>
+</template>
+
+-->
  
 <script>
     export default {
+      props: [name],
         data(){
             return {
-                task: {
+                product: {
                     name: '',
                     description: ''
                 },
                 errors: [],
-                tasks: [],
-                update_task: []
+                 products: [],
+               // update_product: {}
             }
         },
         mounted()
         {
-            this.readTasks();
+            this.readProducts();
+ 
         },
         methods: {
-            initAddTask()
+
+            initAddProduct()
             {
-                $("#add_task_model").modal("show");
+                $("#add_product_model").modal("show");
             },
-            createTask()
+            createProduct()
             {
-                axios.post('http://medicare.test:82/task', {
-                    name: this.task.name,
-                    description: this.task.description,
+                axios.post('http://medicare.test:82/product', {
+                    name: this.product.name,
+                    description: this.product.description,
                 })
                     .then(response => {
  
                         this.reset();
  
-                        this.tasks.push(response.data.task);
+                        this.Products.push(response.data.product);
  
-                        $("#add_task_model").modal("hide");
+                        $("#add_product_model").modal("hide");
  
                     })
                     .catch(error => {
@@ -169,64 +161,15 @@
                         }*/
                     });
             },
-            reset()
+             readProducts()
             {
-                this.task.name = '';
-                this.task.description = '';
-            },
-            readTasks()
-            {
-                axios.get('/task')
+                axios.get('/product')
                     .then(response => {
  
-                        this.tasks = response.data.tasks;
+                        this.products = response.data.products;
  
                     });
             },
-            initUpdate(id)
-            {
-                this.errors = [];
-                $("#update_task_model").modal("show");
-                this.update_task = this.tasks[task.id];
-            },
-            updateTask()
-            {
-                axios.patch('task/{task}' + this.update_task.id, {
-                    name: this.update_task.name,
-                    description: this.update_task.description,
-                })
-                    .then(response => {
- 
-                        $("#update_task_model").modal("hide");
- 
-                    })
-                    .catch(error => {
-                        this.errors = [];
-                        if (error.response.data.errors.name) {
-                            this.errors.push(error.response.data.errors.name[0]);
-                        }
- 
-                        if (error.response.data.errors.description) {
-                            this.errors.push(error.response.data.errors.description[0]);
-                        }
-                    });
-            },
-            deleteTask(index)
-            {
-                let conf = confirm("Do you ready want to delete this task?");
-                if (conf === true) {
- 
-                    axios.delete('/task/' + this.task.id)
-                        .then(response => {
- 
-                            this.tasks.splice(index, 0);
- 
-                        })
-                        .catch(error => {
- 
-                        });
-                }
-            }
         }
     }
 </script>
