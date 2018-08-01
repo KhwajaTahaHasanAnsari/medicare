@@ -11,10 +11,7 @@ class Product extends Model
         'product_id',
         'description',
     ];
-    public function Product()
-    {
-            return $this ->belongsto(Product::class);
-    }
+   
     public function user()
     {
             return $this ->belongsto(user::class);
