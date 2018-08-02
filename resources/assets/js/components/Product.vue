@@ -1,8 +1,34 @@
 <template>
-            <Productlist :Products="product">
-                <li>{{product}}</li>
-            </Productlist>
-     
+      <div class= 'model'>      
+          
+       <table class="card" v-for="product in products" :key="product.id" >
+                            <tbody>
+                            <tr>
+                                <th>
+                                    Id.
+                                </th>
+                                <th>
+                                    Name
+                                </th>
+                                <th>
+                                    Description
+                                </th>
+                                
+                            </tr>
+                         <!--   <tr  v-for="product in products" :key="product.id">-->
+                                <td>{{ product.id}}</td>
+                                <td>
+                                    {{ product.name }}
+                                </td>
+                                <td>
+                                    {{ product.description }}
+                                </td>
+                               
+                          <!--  </tr>-->
+                            </tbody>
+                        </table>
+             
+      </div>
  </template>
 
  
@@ -16,10 +42,7 @@
  
         data(){
             return {
-                product: {
-                    name: '',
-                    description: ''
-                },
+               
                 errors: [],
                  products: [],
                // update_product: {}
@@ -67,7 +90,7 @@
                 axios.get('/product')
                     .then(response => {
  
-                        this.products = response.data.products;
+                        this.products = response.data.Products;
  
                     });
             },

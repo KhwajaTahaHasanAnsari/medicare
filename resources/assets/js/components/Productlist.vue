@@ -1,11 +1,12 @@
 <template> 
 <div id =#app>
-   <p>  pdt : {{products}} </p>
-   <slot>
-   <!-- <li v-for="product in products" :key ="product.id">
+   <!--<p>  product : {{products}} </p>-->
+  <!-- <slot>
+   <li v-for="product in products" :key ="product.id">
        {{Product}}
-    </li>-->
+    </li>
     </slot>
+    -->
    </div>
 
 

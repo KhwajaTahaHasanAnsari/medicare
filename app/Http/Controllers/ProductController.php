@@ -13,15 +13,20 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+  //  public function __construct()
+  //  {
+   //     $this->middleware('auth');
+//}
+
+    public function index(Request $request)
     {
-        $products = Product::where(['product_id' => Auth::user()->id])->get();
-        return response()->json([
+       $products = Product::all();
+       //where(['product_id' => Auth::user()->id])->get();
+       return response()->json([
           'Products'    => $products,
       ], 200);
       
-     
-
+    
      return view('Product.index' );
     }
 
@@ -48,7 +53,7 @@ class ProductController extends Controller
             'description' => 'required',
         ]);
  
-        $product = Product::create([
+        $product = product::create([
             'name'        => request('name'),
             'description' => request('description'),
             'product_id'  => Auth::user()->id

@@ -40004,7 +40004,7 @@ exports = module.exports = __webpack_require__(4)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -40026,6 +40026,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -40036,10 +40061,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     data: function data() {
         return {
-            product: {
-                name: '',
-                description: ''
-            },
+
             errors: [],
             products: []
             // update_product: {}
@@ -40081,7 +40103,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             axios.get('/product').then(function (response) {
 
-                _this2.products = response.data.products;
+                _this2.products = response.data.Products;
             });
         }
     }
@@ -40173,7 +40195,7 @@ exports = module.exports = __webpack_require__(4)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -40184,6 +40206,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
 //
 //
 //
@@ -40219,16 +40242,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { attrs: { id: "#app" } },
-    [
-      _c("p", [_vm._v("  pdt : " + _vm._s(_vm.products) + " ")]),
-      _vm._v(" "),
-      _vm._t("default")
-    ],
-    2
-  )
+  return _c("div", { attrs: { id: "#app" } })
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -40248,11 +40262,62 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("Productlist", { attrs: { Products: _vm.product } }, [
-    _c("li", [_vm._v(_vm._s(_vm.product))])
-  ])
+  return _c(
+    "div",
+    { staticClass: "model" },
+    _vm._l(_vm.products, function(product) {
+      return _c("table", { key: product.id, staticClass: "card" }, [
+        _c("tbody", [
+          _vm._m(0, true),
+          _vm._v(" "),
+          _c("td", [_vm._v(_vm._s(product.id))]),
+          _vm._v(" "),
+          _c("td", [
+            _vm._v(
+              "\n                              " +
+                _vm._s(product.name) +
+                "\n                          "
+            )
+          ]),
+          _vm._v(" "),
+          _c("td", [
+            _vm._v(
+              "\n                              " +
+                _vm._s(product.description) +
+                "\n                          "
+            )
+          ])
+        ])
+      ])
+    })
+  )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("th", [
+        _vm._v(
+          "\n                              Id.\n                          "
+        )
+      ]),
+      _vm._v(" "),
+      _c("th", [
+        _vm._v(
+          "\n                              Name\n                          "
+        )
+      ]),
+      _vm._v(" "),
+      _c("th", [
+        _vm._v(
+          "\n                              Description\n                          "
+        )
+      ])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
