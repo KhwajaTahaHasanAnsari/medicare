@@ -118,6 +118,8 @@ public function update(Request $request, Task $task)
         return response()->json([
             'message' => 'Task updated successfully!'
         ], 200);
+
+    
     }
 
     /**
@@ -126,13 +128,20 @@ public function update(Request $request, Task $task)
      * @param  \App\task  $task
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Task $task)
-    {
-        $task->delete();
-        return response()->json([
-            'message' => 'Task deleted successfully!'
-        ], 200);
+    
+    public function destroy($id)
+    {    // dd($task);
+        return task::find($id)->delete($id);
+
     }
+
+ //  public function destroy($id)
+   // {
+     //   $task->delete();
+       // return response()->json([
+         //   'message' => 'Task deleted successfully!'
+        //], 200);
+   // }
    
 }
     

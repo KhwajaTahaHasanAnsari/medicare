@@ -24,15 +24,3 @@ Route::resource('/task','Taskcontroller');
 Route::resource('/product','Productcontroller');
 
 //list single task
-Route::get('task/{id}', 'TaskController@show');
-//create  new task
-Route::post('task','TaskController@store');
-
-//update task
-Route::put('Tasks','TaskController@store');
-
-//delete task
-Route::delete('tasks','TaskController@destroy');
-
-//list single product
-Route::get('product/{id}', 'Productcontroller@show');

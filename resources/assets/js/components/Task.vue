@@ -37,8 +37,8 @@
                                     {{ task.description }}
                                 </td>
                                 <td>
-                                    <button @click="initUpdate(index)" class="btn btn-success btn-xs">Edit</button>
-                                   <button @click="deleteTask(index)" class="btn btn-danger btn-xs">Delete</button>
+                                    <button @click="initUpdate(task)" class="btn btn-success btn-xs">Edit</button>
+                                   <button @click="deleteTask(task.id)" class="btn btn-danger btn-xs">Delete</button>
                                 </td>
                             </tr>
                             </tbody>
@@ -101,13 +101,13 @@
  
                         <div class="form-group">
                             <label>Name:</label>
-                            <input type="text" placeholder="Task Name" class="form-control"
-                                   v-model="update_task.name">
+                            <input type="text" placeholder="Task Name" class="form-control" id="e_task_name">
+                            <input type="hidden" placeholder="Task Name" class="form-control" id="e_task_id">
                         </div>
                         <div class="form-group">
                             <label for="description">Description:</label>
                             <textarea cols="30" rows="5" class="form-control"
-                                      placeholder="Task Description" v-model="update_task.description"></textarea>
+                                      placeholder="Task Description" id="e_task_desc"></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -126,12 +126,13 @@
         data(){
             return {
                 task: {
+                    id:'',
                     name: '',
                     description: ''
                 },
                 errors: [],
                 tasks: [],
-                update_task: []
+                update_task:[]
             }
         },
         mounted()
@@ -183,21 +184,35 @@
  
                     });
             },
-            initUpdate(id)
-            {
+            initUpdate(task)
+            {   
+                
+                console.log("inside update method");
+                console.log(task);
                 this.errors = [];
+                 this.update_task.taskIndex = this.tasks[task.Id];
+                $('#e_task_name').val(task.name);
+                $('#e_task_desc').val(task.description);
+                $('#e_task_id').val(task.id);
+
                 $("#update_task_model").modal("show");
-                this.update_task = this.tasks[task.id];
+              
+               
+               // this.update_task.id = this.task.id;
+               // this.update_task.name = this.task.name;
+               // this.update_task.description= this.task.description;
             },
             updateTask()
             {
-                axios.patch('task/{task}' + this.update_task.id, {
-                    name: this.update_task.name,
-                    description: this.update_task.description,
+                axios.patch('http://medicare.test:82/task/' + $('#e_task_id').val(), {
+                    name: $('#e_task_name').val(),
+                    description: $('#e_task_desc').val(),
                 })
                     .then(response => {
  
                         $("#update_task_model").modal("hide");
+                        //alert(response);
+                        window.location.reload();
  
                     })
                     .catch(error => {
@@ -211,19 +226,23 @@
                         }
                     });
             },
-            deleteTask(index)
+            deleteTask(id)
             {
                 let conf = confirm("Do you ready want to delete this task?");
                 if (conf === true) {
- 
-                    axios.delete('/task/' + this.task.id)
+                  console.log(id);
+                       // this.tasks.taskIndex = this.task[id];
+                    axios.delete(`http://medicare.test:82/task/`+ 'id' ,this.task)
+                   // + this.task.id
                         .then(response => {
- 
-                            this.tasks.splice(index, 0);
- 
+
+                              this.tasks.push(response.data.task);
+                           //const  taskIndex  = this.tasks.indexOf(task);
+                          //  this.tasks.splice(taskIndex, 1);
+                         //  window.location.reload();
                         })
                         .catch(error => {
- 
+                                console.log(error);
                         });
                 }
             }

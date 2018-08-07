@@ -1,5 +1,5 @@
 <template> 
-<div id =#app>
+<App-Productlist>
    <!--<p>  product : {{products}} </p>-->
   <!-- <slot>
    <li v-for="product in products" :key ="product.id">
@@ -7,7 +7,7 @@
     </li>
     </slot>
     -->
-   </div>
+   </App-Productlist>
 
 
 
@@ -19,11 +19,13 @@
                          'products'
                  ],
                 data(){
-                return{ }
+                return{
+
+                 }
                 },
                 mounted()
                 {
-                        alert (ready);
+                    
                 },
                 methods: {
 

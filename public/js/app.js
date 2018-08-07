@@ -39160,7 +39160,7 @@ exports = module.exports = __webpack_require__(4)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -39332,6 +39332,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             task: {
+                id: '',
                 name: '',
                 description: ''
             },
@@ -39383,20 +39384,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this2.tasks = response.data.tasks;
             });
         },
-        initUpdate: function initUpdate(id) {
+        initUpdate: function initUpdate(task) {
+
+            console.log("inside update method");
+            console.log(task);
             this.errors = [];
+            this.update_task.taskIndex = this.tasks[task.Id];
+            $('#e_task_name').val(task.name);
+            $('#e_task_desc').val(task.description);
+            $('#e_task_id').val(task.id);
+
             $("#update_task_model").modal("show");
-            this.update_task = this.tasks[task.id];
+
+            // this.update_task.id = this.task.id;
+            // this.update_task.name = this.task.name;
+            // this.update_task.description= this.task.description;
         },
         updateTask: function updateTask() {
             var _this3 = this;
 
-            axios.patch('task/{task}' + this.update_task.id, {
-                name: this.update_task.name,
-                description: this.update_task.description
+            axios.patch('http://medicare.test:82/task/' + $('#e_task_id').val(), {
+                name: $('#e_task_name').val(),
+                description: $('#e_task_desc').val()
             }).then(function (response) {
 
                 $("#update_task_model").modal("hide");
+                //alert(response);
+                window.location.reload();
             }).catch(function (error) {
                 _this3.errors = [];
                 if (error.response.data.errors.name) {
@@ -39408,16 +39422,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
             });
         },
-        deleteTask: function deleteTask(index) {
+        deleteTask: function deleteTask(id) {
             var _this4 = this;
 
             var conf = confirm("Do you ready want to delete this task?");
             if (conf === true) {
+                console.log(id);
+                // this.tasks.taskIndex = this.task[id];
+                axios.delete('http://medicare.test:82/task/' + 'id', this.task)
+                // + this.task.id
+                .then(function (response) {
 
-                axios.delete('/task/' + this.task.id).then(function (response) {
-
-                    _this4.tasks.splice(index, 0);
-                }).catch(function (error) {});
+                    _this4.tasks.push(response.data.task);
+                    //const  taskIndex  = this.tasks.indexOf(task);
+                    //  this.tasks.splice(taskIndex, 1);
+                    //  window.location.reload();
+                }).catch(function (error) {
+                    console.log(error);
+                });
             }
         }
     }
@@ -39496,7 +39518,7 @@ var render = function() {
                                   staticClass: "btn btn-success btn-xs",
                                   on: {
                                     click: function($event) {
-                                      _vm.initUpdate(_vm.index)
+                                      _vm.initUpdate(task)
                                     }
                                   }
                                 },
@@ -39509,7 +39531,7 @@ var render = function() {
                                   staticClass: "btn btn-danger btn-xs",
                                   on: {
                                     click: function($event) {
-                                      _vm.deleteTask(_vm.index)
+                                      _vm.deleteTask(task.id)
                                     }
                                   }
                                 },
@@ -39673,67 +39695,9 @@ var render = function() {
                     ])
                   : _vm._e(),
                 _vm._v(" "),
-                _c("div", { staticClass: "form-group" }, [
-                  _c("label", [_vm._v("Name:")]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.update_task.name,
-                        expression: "update_task.name"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { type: "text", placeholder: "Task Name" },
-                    domProps: { value: _vm.update_task.name },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.update_task, "name", $event.target.value)
-                      }
-                    }
-                  })
-                ]),
+                _vm._m(3),
                 _vm._v(" "),
-                _c("div", { staticClass: "form-group" }, [
-                  _c("label", { attrs: { for: "description" } }, [
-                    _vm._v("Description:")
-                  ]),
-                  _vm._v(" "),
-                  _c("textarea", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.update_task.description,
-                        expression: "update_task.description"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      cols: "30",
-                      rows: "5",
-                      placeholder: "Task Description"
-                    },
-                    domProps: { value: _vm.update_task.description },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.update_task,
-                          "description",
-                          $event.target.value
-                        )
-                      }
-                    }
-                  })
-                ])
+                _vm._m(4)
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "modal-footer" }, [
@@ -39834,6 +39798,42 @@ var staticRenderFns = [
       ),
       _vm._v(" "),
       _c("h4", { staticClass: "modal-title" }, [_vm._v("Update Task")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("label", [_vm._v("Name:")]),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form-control",
+        attrs: { type: "text", placeholder: "Task Name", id: "e_task_name" }
+      }),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form-control",
+        attrs: { type: "hidden", placeholder: "Task Name", id: "e_task_id" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "description" } }, [_vm._v("Description:")]),
+      _vm._v(" "),
+      _c("textarea", {
+        staticClass: "form-control",
+        attrs: {
+          cols: "30",
+          rows: "5",
+          placeholder: "Task Description",
+          id: "e_task_desc"
+        }
+      })
     ])
   }
 ]
@@ -40004,7 +40004,7 @@ exports = module.exports = __webpack_require__(4)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -40017,6 +40017,23 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Productlist_vue__ = __webpack_require__(54);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Productlist_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Productlist_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -40073,7 +40090,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         initAddProduct: function initAddProduct() {
-            $("#add_product_model").modal("show");
+            // $("#add_product_model").modal("show");
+
         },
         createProduct: function createProduct() {
             var _this = this;
@@ -40195,7 +40213,7 @@ exports = module.exports = __webpack_require__(4)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -40227,9 +40245,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {};
     },
-    mounted: function mounted() {
-        alert(ready);
-    },
+    mounted: function mounted() {},
 
     methods: {}
 });
@@ -40242,7 +40258,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { attrs: { id: "#app" } })
+  return _c("App-Productlist")
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -40264,32 +40280,117 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "model" },
-    _vm._l(_vm.products, function(product) {
-      return _c("table", { key: product.id, staticClass: "card" }, [
-        _c("tbody", [
-          _vm._m(0, true),
-          _vm._v(" "),
-          _c("td", [_vm._v(_vm._s(product.id))]),
-          _vm._v(" "),
-          _c("td", [
-            _vm._v(
-              "\n                              " +
-                _vm._s(product.name) +
-                "\n                          "
-            )
-          ]),
-          _vm._v(" "),
-          _c("td", [
-            _vm._v(
-              "\n                              " +
-                _vm._s(product.description) +
-                "\n                          "
-            )
+    [
+      _vm._l(_vm.products, function(product) {
+        return _c("table", { key: product.id, staticClass: "card" }, [
+          _c("tbody", [
+            _vm._m(0, true),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(product.id))]),
+            _vm._v(" "),
+            _c("td", [
+              _vm._v(
+                "\n                                    " +
+                  _vm._s(product.name) +
+                  "\n                                "
+              )
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _vm._v(
+                "\n                                    " +
+                  _vm._s(product.description) +
+                  "\n                                "
+              )
+            ])
           ])
         ])
+      }),
+      _vm._v(" "),
+      _c("br"),
+      _vm._v(" "),
+      _c("form", [
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "productName" } }, [
+            _vm._v("Product name")
+          ]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.product.name,
+                expression: "product.name"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: {
+              type: "text",
+              id: "productName",
+              maxlength: "32",
+              placeholder: "Enter product name"
+            },
+            domProps: { value: _vm.product.name },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.product, "name", $event.target.value)
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group" }, [
+          _vm._m(1),
+          _vm._v(" "),
+          _c("textarea", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.product.description,
+                expression: "product.description"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: {
+              id: "productDescription",
+              rows: "3",
+              maxlength: "128",
+              placeholder: "Enter description"
+            },
+            domProps: { value: _vm.product.description },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.product, "description", $event.target.value)
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-primary",
+            attrs: { type: "submit" },
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                return _vm.createProduct($event)
+              }
+            }
+          },
+          [_vm._v("Save product")]
+        )
       ])
-    })
+    ],
+    2
   )
 }
 var staticRenderFns = [
@@ -40300,21 +40401,30 @@ var staticRenderFns = [
     return _c("tr", [
       _c("th", [
         _vm._v(
-          "\n                              Id.\n                          "
+          "\n                                    Id.\n                                "
         )
       ]),
       _vm._v(" "),
       _c("th", [
         _vm._v(
-          "\n                              Name\n                          "
+          "\n                                    Name\n                                "
         )
       ]),
       _vm._v(" "),
       _c("th", [
         _vm._v(
-          "\n                              Description\n                          "
+          "\n                                    Description\n                                "
         )
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "productDescription" } }, [
+      _vm._v("Product description "),
+      _c("small", { staticClass: "text-muted" }, [_vm._v("(optional)")])
     ])
   }
 ]
