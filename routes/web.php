@@ -24,3 +24,5 @@ Route::resource('/task','Taskcontroller');
 Route::resource('/product','Productcontroller');
 
 //list single task
+
+//Route::delete('tasks','TaskController@destroy');

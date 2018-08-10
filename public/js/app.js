@@ -39160,7 +39160,7 @@ exports = module.exports = __webpack_require__(4)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -39429,15 +39429,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (conf === true) {
                 console.log(id);
                 // this.tasks.taskIndex = this.task[id];
-                axios.delete('http://medicare.test:82/task/' + 'id', this.task)
+                axios.delete('http://medicare.test:82/task/' + id)
                 // + this.task.id
                 .then(function (response) {
 
-                    _this4.tasks.push(response.data.task);
-                    //const  taskIndex  = this.tasks.indexOf(task);
-                    //  this.tasks.splice(taskIndex, 1);
-                    //  window.location.reload();
-                }).catch(function (error) {
+                    if (response.status < 400) {
+                        _this4.task.splice(_this4.tasks.findIndex(function (e) {
+                            return e.id === id;
+                        }), 1);
+                        _this4.fetchtask();
+                    }
+                })
+
+                // const  taskIndex  = this.tasks.indexOf(task);
+                // this.tasks.splice(taskIndex, 1);
+
+                .catch(function (error) {
                     console.log(error);
                 });
             }
@@ -40004,7 +40011,7 @@ exports = module.exports = __webpack_require__(4)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -40068,6 +40075,74 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -40078,10 +40153,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     data: function data() {
         return {
-
+            product: {
+                id: '',
+                name: '',
+                description: ''
+            },
             errors: [],
-            products: []
-            // update_product: {}
+            products: [],
+            update_product: []
         };
     },
     mounted: function mounted() {
@@ -40090,8 +40169,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         initAddProduct: function initAddProduct() {
-            // $("#add_product_model").modal("show");
-
+            $("#add_product_model").modal("show");
         },
         createProduct: function createProduct() {
             var _this = this;
@@ -40103,7 +40181,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
                 _this.reset();
 
-                _this.Products.push(response.data.product);
+                _this.products.push(response.data.product);
 
                 $("#add_product_model").modal("hide");
             }).catch(function (error) {
@@ -40116,12 +40194,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                  }*/
             });
         },
+        reset: function reset() {
+            this.product.name = '';
+            this.product.description = '';
+        },
         readProducts: function readProducts() {
             var _this2 = this;
 
             axios.get('/product').then(function (response) {
 
-                _this2.products = response.data.Products;
+                _this2.products = response.data.products;
             });
         }
     }
@@ -40278,120 +40360,272 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _vm._l(_vm.products, function(product) {
-        return _c("table", { key: product.id, staticClass: "card" }, [
-          _c("tbody", [
-            _vm._m(0, true),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(product.id))]),
-            _vm._v(" "),
-            _c("td", [
-              _vm._v(
-                "\n                                    " +
-                  _vm._s(product.name) +
-                  "\n                                "
-              )
-            ]),
-            _vm._v(" "),
-            _c("td", [
-              _vm._v(
-                "\n                                    " +
-                  _vm._s(product.description) +
-                  "\n                                "
-              )
-            ])
-          ])
-        ])
-      }),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
-      _c("form", [
-        _c("div", { staticClass: "form-group" }, [
-          _c("label", { attrs: { for: "productName" } }, [
-            _vm._v("Product name")
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c("div", { staticClass: "panel panel-default" }, [
+          _c("div", { staticClass: "panel-heading" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary btn-xs pull-right",
+                on: {
+                  click: function($event) {
+                    _vm.initAddProduct()
+                  }
+                }
+              },
+              [
+                _vm._v(
+                  "\n                              + Add New product\n                          "
+                )
+              ]
+            ),
+            _vm._v(
+              "\n                              product\n                       "
+            )
           ]),
           _vm._v(" "),
-          _c("input", {
-            directives: [
+          _c("div", { staticClass: "panel-body" }, [
+            _c(
+              "table",
               {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.product.name,
-                expression: "product.name"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: {
-              type: "text",
-              id: "productName",
-              maxlength: "32",
-              placeholder: "Enter product name"
-            },
-            domProps: { value: _vm.product.name },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.product, "name", $event.target.value)
-              }
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-group" }, [
-          _vm._m(1),
-          _vm._v(" "),
-          _c("textarea", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.product.description,
-                expression: "product.description"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: {
-              id: "productDescription",
-              rows: "3",
-              maxlength: "128",
-              placeholder: "Enter description"
-            },
-            domProps: { value: _vm.product.description },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.product, "description", $event.target.value)
-              }
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-primary",
-            attrs: { type: "submit" },
-            on: {
-              click: function($event) {
-                $event.preventDefault()
-                return _vm.createProduct($event)
-              }
-            }
-          },
-          [_vm._v("Save product")]
-        )
+                staticClass:
+                  "table table-bordered table-striped table-responsive"
+              },
+              [
+                _c(
+                  "tbody",
+                  [
+                    _vm._m(0),
+                    _vm._v(" "),
+                    _vm._l(_vm.products, function(product) {
+                      return _c("tr", { key: product.id }, [
+                        _c("td", [_vm._v(_vm._s(product.id))]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(
+                            "\n                                      " +
+                              _vm._s(product.name) +
+                              "\n                                  "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(
+                            "\n                                      " +
+                              _vm._s(product.description) +
+                              "\n                                  "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-success btn-xs",
+                              on: {
+                                click: function($event) {
+                                  _vm.initUpdate(product)
+                                }
+                              }
+                            },
+                            [_vm._v("Edit")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-danger btn-xs",
+                              on: {
+                                click: function($event) {
+                                  _vm.deleteTask(product.id)
+                                }
+                              }
+                            },
+                            [_vm._v("Delete")]
+                          )
+                        ])
+                      ])
+                    })
+                  ],
+                  2
+                )
+              ]
+            )
+          ])
+        ])
       ])
-    ],
-    2
-  )
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: { tabindex: "-1", role: "dialog", id: "add_task_model" }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "name" } }, [_vm._v("Name:")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.product.name,
+                        expression: "product.name"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "text",
+                      name: "name",
+                      id: "name",
+                      placeholder: "Product Name"
+                    },
+                    domProps: { value: _vm.product.name },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.product, "name", $event.target.value)
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "description" } }, [
+                    _vm._v("Description:")
+                  ]),
+                  _vm._v(" "),
+                  _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.product.description,
+                        expression: "product.description"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      name: "description",
+                      id: "description",
+                      cols: "30",
+                      rows: "5",
+                      placeholder: "Product Description"
+                    },
+                    domProps: { value: _vm.product.description },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.product,
+                          "description",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-default",
+                    attrs: { type: "button", "data-dismiss": "modal" }
+                  },
+                  [_vm._v("Close")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "button" },
+                    on: { click: _vm.createProduct }
+                  },
+                  [_vm._v("Submit")]
+                )
+              ])
+            ])
+          ]
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: { tabindex: "-1", role: "dialog", id: "update_task_model" }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(2),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _vm.errors.length > 0
+                  ? _c("div", { staticClass: "alert alert-danger" }, [
+                      _c(
+                        "ul",
+                        _vm._l(_vm.errors, function(error) {
+                          return _c("li", [_vm._v(_vm._s(error))])
+                        })
+                      )
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm._m(3),
+                _vm._v(" "),
+                _vm._m(4)
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-default",
+                    attrs: { type: "button", "data-dismiss": "modal" }
+                  },
+                  [_vm._v("Close")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "button" },
+                    on: { click: _vm.update_product }
+                  },
+                  [_vm._v("Submit")]
+                )
+              ])
+            ])
+          ]
+        )
+      ]
+    )
+  ])
 }
 var staticRenderFns = [
   function() {
@@ -40401,19 +40635,25 @@ var staticRenderFns = [
     return _c("tr", [
       _c("th", [
         _vm._v(
-          "\n                                    Id.\n                                "
+          "\n                                      No.\n                                  "
         )
       ]),
       _vm._v(" "),
       _c("th", [
         _vm._v(
-          "\n                                    Name\n                                "
+          "\n                                      Name\n                                  "
         )
       ]),
       _vm._v(" "),
       _c("th", [
         _vm._v(
-          "\n                                    Description\n                                "
+          "\n                                      Description\n                                  "
+        )
+      ]),
+      _vm._v(" "),
+      _c("th", [
+        _vm._v(
+          "\n                                      Action\n                                  "
         )
       ])
     ])
@@ -40422,9 +40662,78 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("label", { attrs: { for: "productDescription" } }, [
-      _vm._v("Product description "),
-      _c("small", { staticClass: "text-muted" }, [_vm._v("(optional)")])
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      ),
+      _vm._v(" "),
+      _c("h4", { staticClass: "modal-title" }, [_vm._v("Add New Product")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      ),
+      _vm._v(" "),
+      _c("h4", { staticClass: "modal-title" }, [_vm._v("Update Product")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("label", [_vm._v("Name:")]),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form-control",
+        attrs: { type: "text", placeholder: "Product Name", id: "e_prod_name" }
+      }),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form-control",
+        attrs: { type: "hidden", placeholder: "Product Name", id: "e_prod_id" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "description" } }, [_vm._v("Description:")]),
+      _vm._v(" "),
+      _c("textarea", {
+        staticClass: "form-control",
+        attrs: {
+          cols: "30",
+          rows: "5",
+          placeholder: "Product Description",
+          id: "e_prod_desc"
+        }
+      })
     ])
   }
 ]

@@ -232,15 +232,21 @@
                 if (conf === true) {
                   console.log(id);
                        // this.tasks.taskIndex = this.task[id];
-                    axios.delete(`http://medicare.test:82/task/`+ 'id' ,this.task)
+                    axios.delete(`http://medicare.test:82/task/`+ id )
                    // + this.task.id
                         .then(response => {
 
-                              this.tasks.push(response.data.task);
-                           //const  taskIndex  = this.tasks.indexOf(task);
-                          //  this.tasks.splice(taskIndex, 1);
-                         //  window.location.reload();
+                            if (response.status < 400) { 
+                            this.task.splice( 
+                             this.tasks.findIndex(e => e.id === id), 1) 
+                              this.fetchtask();
+                              } 
+                           
                         })
+                        
+                           // const  taskIndex  = this.tasks.indexOf(task);
+                           // this.tasks.splice(taskIndex, 1);
+                           
                         .catch(error => {
                                 console.log(error);
                         });

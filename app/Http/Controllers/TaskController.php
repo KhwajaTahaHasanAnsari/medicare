@@ -129,11 +129,17 @@ public function update(Request $request, Task $task)
      * @return \Illuminate\Http\Response
      */
     
-    public function destroy($id)
-    {    // dd($task);
-        return task::find($id)->delete($id);
+          public function destroy($id)
+         {    // dd($task);
+                 task::find($id)->delete($id);
+                 return response()->json([
+                       'message' => 'Task deleted successfully!'
+                   ], 200);
+              
 
-    }
+        }
+
+    
 
  //  public function destroy($id)
    // {
